@@ -1,61 +1,91 @@
 #include "widget.h"
-#include "ui_widget.h"
-#include<QDebug>
-#include<QIcon>
-#include<QStringList>
-
+#include <QPushButton>
+#include <QLabel>
+#include <QTextEdit>
+#include <QDebug>
+#include <QColorDialog>
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::Widget)
 {
-    ui->setupUi(this);
-    QStringList list;
 
-    list <<"Fruits"<<"Apple"<<"Orange"<<"papaya"<<"JackFruit";
+     QFont labelFont("Times",20,QFont::Bold);
+     QLabel *mLabel=new QLabel("This Is My Sentence",this);
+     mLabel->setFont(labelFont);
+     mLabel->move(60,25);
+     QPalette label;
 
-    ui->comboBox->setStyleSheet("background-color: rgb(0, 0, 0) ; color: rgb(0, 255, 255);");
+         label.setColor(QPalette::Window,Qt::yellow);
 
-       ui->comboBox->setEditable(true);
+         label.setColor(QPalette::WindowText,Qt::red);
 
-       for(int i=0;i<list.size();i++)
+         mLabel->setAutoFillBackground(true);
 
-       {
+         mLabel->setPalette(label);
+     QTextEdit *text=new QTextEdit(this);
 
-       ui->comboBox->addItem(QIcon("C:/Users/muthu/Downloads/cb.jpeg"),list.at(i));
+          text->move(50,55);
 
-   }
+          connect(text,&QTextEdit::textChanged,[=](){
+
+          qDebug()<<"Text Changed"; });
+
+          QPushButton *cut=new QPushButton("cut",this);
+
+           cut->setMinimumSize(50,25);
+
+           cut->move(10,250);
+
+           connect(cut,&QPushButton::clicked,[=](){
+
+            text->cut(); });
+           QPushButton *copy=new QPushButton("copy",this);
+
+            copy->setMinimumSize(50,25);
+
+            copy->move(110,250);
+
+            connect(copy,&QPushButton::clicked,[=](){
+
+             text->copy(); });
+            QPushButton *paste=new QPushButton("paste",this);
+
+             paste->setMinimumSize(50,25);
+
+             paste->move(210,250);
+
+             connect(paste,&QPushButton::clicked,[=](){
+
+              text->paste(); });
+             QPushButton *undo=new QPushButton("undo",this);
+
+              undo->setMinimumSize(50,25);
+
+              undo->move(10,280);
+
+              connect(undo,&QPushButton::clicked,[=](){
+
+               text->undo(); });
+              QPushButton *redo=new QPushButton("redo",this);
+
+               redo->setMinimumSize(50,25);
+
+               redo->move(110,280);
+
+               connect(redo,&QPushButton::clicked,[=](){
+
+                text->redo(); });
+               QPushButton *html=new QPushButton("HTML",this);
+
+                html->setMinimumSize(100,25);
+
+                html->move(120,310);
+
+                connect(html,&QPushButton::clicked,[=](){
+
+                 text->setHtml("<h1>Title</h1><p>Three Silk Sarees:</br> <ul><li>Banarasi</li><li>mulberry</li><li>mysore</li></ul></p>");  });
 }
 
 Widget::~Widget()
-{
-    delete ui;
-}
+{}
 
-
-void Widget::on_capturevalues_clicked()
-{
-    qDebug()<<"The currently chosen item is "<<ui->comboBox->currentText();
-       qDebug()<<"\nThe index is "<<QString::number(ui->comboBox->currentIndex());
-
-}
-
-void Widget::on_setvalues_clicked()
-{
-    ui->comboBox->setCurrentIndex(2);
-    qDebug()<<"The item is changed to Index(2)-Orange";
-
-}
-
-void Widget::on_getvalues_clicked()
-{
-    qDebug()<<"The combo box currently has"<<QString::number(ui->comboBox->count())<<"Items.They are";
-
-        for(int i=0;i<ui->comboBox->count();i++)
-
-        {
-
-            qDebug()<<"Index"<<QString::number(i)<<":"<<ui->comboBox->itemText(i);
-
-        }
-}

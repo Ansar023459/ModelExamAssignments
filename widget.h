@@ -3,10 +3,6 @@
 
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class Widget; }
-QT_END_NAMESPACE
-
 class Widget : public QWidget
 {
     Q_OBJECT
@@ -14,15 +10,5 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
-
-private slots:
-    void on_capturevalues_clicked();
-
-    void on_setvalues_clicked();
-
-    void on_getvalues_clicked();
-
-private:
-    Ui::Widget *ui;
 };
 #endif // WIDGET_H
